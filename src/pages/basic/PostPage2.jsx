@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { COLOR_OPTIONS, SIZE_OPTION } from '../../constants/productOptions';
 import axios from 'axios';
 
@@ -10,6 +10,35 @@ function PostPage2(props) {
             sizeId: "",
             colorId: ""
     });
+
+    const [ sizeOptions, setSizeOptions ] = useState([]);
+    const [ colorOptions, setColorOptions ] = useState([]);
+
+    useEffect( () => {
+        const getSizes = async() => {
+            // sizeList = response의 의미와 같다 
+            const response = await axios.get("http://localhost:8080/api/v1/sizes");
+            setSizeOptions(response.data);
+            setProduct(product => ({
+                ...product,
+                sizeId: response.data[0].sizeId
+            }));
+        }
+
+        const getColors = async() => {
+            // sizeList = response의 의미와 같다 
+            const response = await axios.get("http://localhost:8080/api/v1/colors");
+            setColorOptions(response.data);
+            setProduct(product => ({
+                ...product,
+                sizeId: response.data[0].colorId
+            }));
+        }
+
+        getSizes();
+        getColors();
+        
+    }, []);
 
     const handleInputChange = (e) => {
         setProduct(product => {
@@ -23,7 +52,7 @@ function PostPage2(props) {
     const handleSubmitClick = async () => {
         try {
             // await : 비동기 상태가 될때까지 기다려라 
-            const response = await axios.post("http://localhost:8080/basic/product", product); 
+            const response = await axios.post("http://localhost:8080/api/v1/product", product); 
             console.log(response);
         } catch(error) {
             console.error(error);
@@ -65,20 +94,20 @@ function PostPage2(props) {
 
                 <p>
                     <label htmlFor="">사이즈</label>
-                    <select name="sizeId" onChange={handleInputChange}>
+                    <select name="sizeId" onChange={handleInputChange} value={product.sizeId}>
                         {
-                            SIZE_OPTION.map(size => 
-                            <option key={size.id} value={size.id}>{size.name}</option>)
+                            sizeOptions.map(size => 
+                            <option key={size.sizeId} value={size.sizeId}>{size.sizeName}</option>)
                         }
                     </select> 
                 </p>
 
                 <p>
                     <label htmlFor="">색상</label>
-                    <select name="colorId" onChange={handleInputChange}>
+                    <select name="colorId" onChange={handleInputChange} value={product.colorId}>
                         {
-                            COLOR_OPTIONS.map(color => 
-                            <option key={color.id} value={color.id}>{color.name}</option>)
+                            colorOptions.map(color => 
+                            <option key={color.colorId} value={color.colorId}>{color.colorName}</option>)
                         }
                     </select>  
                 </p>

@@ -6,7 +6,6 @@ export const layout = css`
     width: 300px;
     height: 100%;
     background-color: #ffffff;
-
 `;
 
 export const list = css`

@@ -6,7 +6,7 @@ import { BASIC_MENU } from '../../constants/basicMenu';
 
 function Sidebar(props) {
     return (
-            <div style={s.layout}>
+            <div css={s.layout}>
                     <ul css={s.list}>
                         {
                             // 자동으로 작동이 되도록 
