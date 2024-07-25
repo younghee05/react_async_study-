@@ -13,6 +13,7 @@ import PostPage2 from "./pages/basic/PostPage2";
 import PromisePage from "./pages/basic/PromisePage";
 import RegisterSizePage from "./pages/basic/RegisterSizePage";
 import RegisterColorPage from "./pages/basic/RegisterColorPage";
+import ComputerPage from "./pages/basic/ComputerPage";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
             <Route path="/async/basic/promise" element={<PromisePage />}/>
             <Route path="/async/basic/size/register" element={<RegisterSizePage />}/>
             <Route path="/async/basic/color/register" element={<RegisterColorPage />}/>
+            <Route path="/computer" element={<ComputerPage />}/>
 
             
 
